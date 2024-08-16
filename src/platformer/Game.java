@@ -16,6 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
@@ -1236,10 +1237,12 @@ public class Game extends Canvas implements Runnable {
 		// map: ground.-500.-100.200.50,lava.-500.-100.200.50
 		// entities: basicenemy.800.130,pistolenemy.1450.-200
 		
-		String output = "";
+		StringBuilder output = new StringBuilder();
+		
+		//String output = "";
 		
 		//META
-		output += spawnX + "," + spawnY + "," + deathY + ";";		
+		output.append(spawnX + "," + spawnY + "," + deathY + ";");
 		
 		//MAP
 		int itemsAdded = 0;
@@ -1247,27 +1250,27 @@ public class Game extends Canvas implements Runnable {
 		LinkedList<MapObject> map = maphandler.map;
 		for (int i = 0; i < map.size(); i++) {
 			if (!map.get(i).getName().equals("null")) {
-				output += map.get(i).getName();
+				output.append(map.get(i).getName());
 				
 				if (map.get(i).customColor) {
-					output += "Color";
+					output.append("Color");
 				}
 				
-				output += "." + map.get(i).x + "." + map.get(i).y + "." + map.get(i).xSize + "." + map.get(i).ySize;
+				output.append("." + map.get(i).x + "." + map.get(i).y + "." + map.get(i).xSize + "." + map.get(i).ySize);
 				
 				if (map.get(i).customColor) {
-					output += "." + map.get(i).color.getRed() + "." + map.get(i).color.getGreen() + "." + map.get(i).color.getBlue();
+					output.append("." + map.get(i).color.getRed() + "." + map.get(i).color.getGreen() + "." + map.get(i).color.getBlue());
 				}
 				
-				output += ",";
+				output.append(",");
 				itemsAdded++;
 			}
 		}
 		
 		if (itemsAdded == 0) {
-			output += " ";
+			output.append(" ");
 		}
-		output += ";";
+		output.append(";");
 		
 		//ENTITIES
 		itemsAdded = 0;
@@ -1275,19 +1278,17 @@ public class Game extends Canvas implements Runnable {
 		List<Entity> entities = entityhandler.entities;
 		for (int i = 0; i < entities.size(); i++) {
 			if (!entities.get(i).getName().equals("null")) {
-				output += entities.get(i).getName() + ".";
-				output += entities.get(i).x + "." + entities.get(i).y;
+				output.append(entities.get(i).getName() + "." + entities.get(i).x + "." + entities.get(i).y + ",");
 				
-				output += ",";
 				itemsAdded++;
 			}
 		}
 		
 		if (itemsAdded == 0) {
-			output += " ";
+			output.append(" ");
 		}
 		
-		return output;
+		return output.toString();
 	}
 	
 	public static void loadLevelFromString(String level) {
