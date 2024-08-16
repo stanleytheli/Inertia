@@ -1,10 +1,16 @@
 package platformer;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 public class SettingsWindow extends InGameWindow {
 
-	public SettingsWindow(int x, int y, int xSize, int ySize, String title) {
-		super(x, y, xSize, ySize, title);
-		// TODO Auto-generated constructor stub
+	private int backgroundAlpha;
+	
+	public SettingsWindow() {
+		super(250, 200, 500, 600, "Paused");
+		setupSettings();
 	}
 	
 	@Override
@@ -45,6 +51,14 @@ public class SettingsWindow extends InGameWindow {
 		for (int i = 0; i < components.size(); i++) {
 			components.get(i).tick();
 		}
+	}
+	
+	@Override
+	public void render(Graphics g, Graphics2D g2d) {
+		g.setColor(new Color(0, 0, 0, backgroundAlpha));
+		g.fillRect(0, 0, Window.windowX, Window.windowY);
+		
+		super.render(g, g2d);
 	}
 	
 	

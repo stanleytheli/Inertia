@@ -22,7 +22,7 @@ public class InGameWindow {
 	public Color color2 = new Color (87, 87, 87);
 	public Color textColor = new Color(255, 255, 255);
 	
-	public int x, y, xSize, ySize, displayX, displayY, backgroundAlpha;
+	public int x, y, xSize, ySize, displayX, displayY;
 	public boolean shown, centered = true;
 	public String title;
 	
@@ -62,9 +62,6 @@ public class InGameWindow {
 	}
 	
 	public void render(Graphics g, Graphics2D g2d) {
-		
-		g.setColor(new Color(0, 0, 0, backgroundAlpha));
-		g.fillRect(0, 0, Window.windowX, Window.windowY);
 		
 		if (displayY <= 0 - ySize) {
 			return;

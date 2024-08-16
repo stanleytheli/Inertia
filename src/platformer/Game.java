@@ -69,12 +69,11 @@ public class Game extends Canvas implements Runnable {
 	private static boolean running;
 	private static Thread thread;
 	
-	public static String recentInput = "";
-	public static boolean newInput = false;
+	private static String recentInput = "";
+	private static boolean newInput = false;
 	private static Thread inputThread = new Thread() {		
 		
 		public void run() {			
-			Scanner scanner = new Scanner(System.in);
 			
 			while (true) {
 				if (scanner.hasNextLine()) {
@@ -84,6 +83,7 @@ public class Game extends Canvas implements Runnable {
 					
 				}
 			}
+			
 		}
 	};
 		
@@ -92,25 +92,27 @@ public class Game extends Canvas implements Runnable {
 	//130, 247, 255
 	//114, 244, 252
 	//150, 200, 255
-	public static Color backgroundColor = new Color(130, 247, 255); //(130, 247, 255)
 	public static MapHandler maphandler = new MapHandler();
 	public static EntityHandler entityhandler = new EntityHandler();
-	public static KeyTracker keytracker = new KeyTracker();
-	public static MouseClickTracker mouseclicktracker = new MouseClickTracker();
-	public static MouseTracker mousemotiontracker = new MouseTracker();
-	public static Scanner scanner = new Scanner(System.in);
 	public static Player player;
-	public static DoorObject door;
-	public static SettingsWindow settingsmenu;
-	public static GrapplingHook grapplingHook;
+
+	private static Color backgroundColor = new Color(130, 247, 255); //(130, 247, 255)
+	private static KeyTracker keytracker = new KeyTracker();
+	private static MouseClickTracker mouseclicktracker = new MouseClickTracker();
+	private static MouseTracker mousemotiontracker = new MouseTracker();
+	private static Scanner scanner = new Scanner(System.in);
+	private static DoorObject door;
+	private static SettingsWindow settingsmenu;
+	private static GrapplingHook grapplingHook;
 	
 	public static double cameraX = 35;
 	public static double cameraY = 35;
-	public static double cameraXoffset = 0;
-	public static double cameraYoffset = 0;
-	public static int lastDeathX = 0;
-	public static int lastDeathY = 0;
 	
+	private static double cameraXoffset = 0;
+	private static double cameraYoffset = 0;
+	private static int lastDeathX = 0;
+	private static int lastDeathY = 0;
+
 	public static int spawnInvincibilityTimer = 0;
 	
 	public static int jumpTimer = 0;
@@ -126,39 +128,40 @@ public class Game extends Canvas implements Runnable {
 	public static boolean newClick = true;
 	public static boolean newRightClick = true;
 
-	public static boolean slowMotionMode = false;
-	public static boolean canToggleSlowMotion = true;
-	public static double shotgunAngleOffset = 0;
-	public static double shotgunRecoilOffset = 0;
-	public static double shotgunX = 500;
-	public static double shotgunY = 500;
-	public static double shotgunMovementDelay = 3;
-	public static int shotgunReloadTimer = 0;
-	public static int grapplingHookReloadTimer = 0; 
+	private static boolean slowMotionMode = false; 
+	private static boolean canToggleSlowMotion = true;
+	private static double shotgunAngleOffset = 0; //TODO move shotgun to its own class
+	private static double shotgunRecoilOffset = 0;
+	private static double shotgunX = 500;
+	private static double shotgunY = 500;
+	private static double shotgunMovementDelay = 3;
+	private static int shotgunReloadTimer = 0;
+	private static int grapplingHookReloadTimer = 0; 
+	
 	public static int deathAnimationTimer = 0;
 
-	public static long gameStart = System.currentTimeMillis();
-	public static long lastTime = System.currentTimeMillis();
+	private static long gameStart = System.currentTimeMillis();
+	private static long lastTime = System.currentTimeMillis();
 	
-	public static int splashDamageEffectAlpha = 0;
-	public static int slowMoAlpha = 0;
-	public static int[] rainX = new int[0];
-	public static int[] rainY = new int[0];
-	public static int rainCount = 50;
+	private static int splashDamageEffectAlpha = 0;
+	private static int slowMoAlpha = 0;
+	private static int[] rainX = new int[0];
+	private static int[] rainY = new int[0];
+	private static int rainCount = 50;
 
 	public static boolean paused;
 	public static int gameTicks;
 	public static int enemiesLeft = 0;
 	public static int level = 0;
 
-	public static int comboTimer = -1;
+	private static int comboTimer = -1;
 	//240, +180, +180
 	//0-240, 240-420, 420-600
-	public static double defaultComboTextSize = 50, boostedComboTextSize = 75, comboTextSize = 50;
+	private static double defaultComboTextSize = 50, boostedComboTextSize = 75, comboTextSize = 50;
 	
 	public static int introScreenTimer = -1;
 	
-	public static String[] intro = {
+	private static String[] intro = {
 			
 			"Centuries ago, the Lands Below dried. No water remained.",
 			"No life could persist.",
@@ -226,25 +229,26 @@ public class Game extends Canvas implements Runnable {
 	//MODIFIABLE
 
 	//Physics
-	public static double tickRate = 60.0; // (60.0) Ticks per second
-	public static double gravity = 0.75; // (0.75) Player falling speed
-	public static double friction = 0.9; // (0.9) Horizontal ground friction
-	public static double airfriction = 0.95; // (0.95) Horizontal air friction
-	public static double yfriction = 0.99; // (0.99) Vertical air friction
-	public static double playerSpeed = 1; // (1) Player acceleration speed
-	public static double jumpPower = 20; // (20) Velocity gained from jumping
-	public static double airControl = 0.6; // (0.6) Speed while midair, relative to playerSpeed
+	public static double gravity = 0.75; // (0.75) Player and Enemy falling speed
 	public static double cameraMovementDelay = 7.5; // (7.5) Speed at which the camera moves to center the player, less = faster, 1 = no delay
 	public static boolean noClip = false; // (false) Prevents player collision with GroundObjects
-	public static boolean godMode = false; // (false) Prevents player dying to killPlayer() method
-	public static boolean flight = false; // (false) Gives player several cheats
 
-	public static double FLYING_airfriction = 0.8; // (0.8)
-	public static double FLYING_playerSpeed = 1.5; // (1.5)
-	public static double FLYING_airControl = 1; // (1)
-	public static double FLYING_jumpPower = 13; // (13)
-	public static int FLYING_jumpCooldown = 0; // (0)
-	public static double FLYING_gravity = 0; // (0)
+	private static double tickRate = 60.0; // (60.0) Ticks per second
+	private static double friction = 0.9; // (0.9) Horizontal ground friction
+	private static double airfriction = 0.95; // (0.95) Horizontal air friction
+	private static double yfriction = 0.99; // (0.99) Vertical air friction
+	private static double playerSpeed = 1; // (1) Player acceleration speed
+	private static double jumpPower = 20; // (20) Velocity gained from jumping
+	private static double airControl = 0.6; // (0.6) Speed while midair, relative to playerSpeed
+	private static boolean godMode = false; // (false) Prevents player dying to killPlayer() method
+	private static boolean flight = false; // (false) Gives player several cheats
+
+	private static double FLYING_airfriction = 0.8; // (0.8)
+	private static double FLYING_playerSpeed = 1.5; // (1.5)
+	private static double FLYING_airControl = 1; // (1)
+	private static double FLYING_jumpPower = 13; // (13)
+	private static int FLYING_jumpCooldown = 0; // (0)
+	private static double FLYING_gravity = 0; // (0)
 	
 	//Display
 	public static boolean displayTime = false; // (false) Whether the game displays the clock or not
@@ -266,25 +270,26 @@ public class Game extends Canvas implements Runnable {
 	public static int crosshairArmLength = 10; // (10)
 	
 	//Gameplay
-	public static double shotgunReloadTime = 70; // (70) Minimum time between shotgun shots. 
-	public static double shotgunRecoilVelocity = 24; // (23) Total velocity gained from shooting the shotgun
-	public static double grapplingHookReloadTime = 50; // (50) Minimum time between grappling hook uses
-	public static double grapplingHookLaunchVelocity = 45; // (45) Grapping hook velocity
-	public static double velocityRequired = 20; // (20) velocity required to kill an enemy
-	public static double xVelocityMultiplierOnKill = 0.5; //(0.5) X-Velocity multiplied by this value upon killing an enemy
-	public static double gainedVelocityOnKill = 17; // (15) Y-Velocity gained upon killing an enemy
-	public static boolean slowMotionAbility = true; // (true) Whether the player can turn on slow motion
-	public static int slowMotionFactor = 3; // (3) 1/x ticks are skipped when in slow motion
-	public static double splashDamageRange = 175; // (175) How far the player can be to kill an enemy
-	public static int jumpCooldown = 5; //(5) Minimum time between jumps. This only exists to fix a physics glitch that caused variable jump heights.
-	public static int spawnX = 0; // (0) The player's initial X position
-	public static int spawnY = 0; // (0) The player's initial Y position
-	public static int deathY = 1500; // (1500) If the player is below (y level above) then they died
-	public static int deathAnimationTime = 50; // (50) Duration of death animation 
-	public static int spawnInvincibilityTime = 60; // (60) Duration of invincibility after spawning
 	public static boolean reloadLevel = false; //(true) Whether the game re-generates the level upon death
 	public static boolean moistureLevel = false; //(true) Whether the game's moisture level feature is on
-	public static int comboTime1 = 360, comboTime2 = comboTime1 + 300, comboTime3 = comboTime2 + 240; //(360, +300, +240) Duration of moisture levels
+	public static double velocityRequired = 20; // (20) velocity required to kill an enemy
+
+	private static double shotgunReloadTime = 70; // (70) Minimum time between shotgun shots. 
+	private static double shotgunRecoilVelocity = 24; // (23) Total velocity gained from shooting the shotgun
+	private static double grapplingHookReloadTime = 50; // (50) Minimum time between grappling hook uses
+	private static double grapplingHookLaunchVelocity = 45; // (45) Grapping hook velocity
+	private static double xVelocityMultiplierOnKill = 0.5; //(0.5) X-Velocity multiplied by this value upon killing an enemy
+	private static double gainedVelocityOnKill = 17; // (15) Y-Velocity gained upon killing an enemy
+	private static boolean slowMotionAbility = true; // (true) Whether the player can turn on slow motion
+	private static int slowMotionFactor = 3; // (3) 1/x ticks are skipped when in slow motion
+	private static double splashDamageRange = 175; // (175) How far the player can be to kill an enemy
+	private static int jumpCooldown = 5; //(5) Minimum time between jumps. This only exists to fix a physics glitch that caused variable jump heights.
+	public static int deathAnimationTime = 50; // (50) Duration of death animation 
+	public static int spawnX = 0; // (0) The player's initial X position
+	public static int spawnY = 0; // (0) The player's initial Y position
+	private static int deathY = 1500; // (1500) If the player is below (y level above) then they died
+	private static int spawnInvincibilityTime = 60; // (60) Duration of invincibility after spawning
+	private static int comboTime1 = 360, comboTime2 = comboTime1 + 300, comboTime3 = comboTime2 + 240; //(360, +300, +240) Duration of moisture levels
 
 	//Cheats/Misc
 	public static int startLevel = 0; //(0) Level index which is initially loaded
@@ -342,8 +347,7 @@ public class Game extends Canvas implements Runnable {
 
 		introScreenTimer = 0;
 		
-		settingsmenu = new SettingsWindow(250, 200, 500, 600, "Paused");
-		settingsmenu.setupSettings();
+		settingsmenu = new SettingsWindow();
 		
 		this.addKeyListener(keytracker);
 		this.addMouseMotionListener(mousemotiontracker);
