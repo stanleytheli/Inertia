@@ -1,5 +1,7 @@
 package platformer;
 
+//TODO finish coding this!
+
 public class MinigunEnemy extends UziEnemy {
 	
 	public int spreadDegrees = 0;
